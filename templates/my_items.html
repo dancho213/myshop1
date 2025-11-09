@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>👜 Мои товары</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f6f6f6; text-align: center; }
+    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 20px; }
+    .card { border: 1px solid #ccc; border-radius: 10px; padding: 10px; text-align: center; background: white; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+    img { width: 150px; height: 150px; object-fit: cover; border-radius: 8px; }
+    button { background: #dc3545; color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; margin-top: 10px; }
+    button:hover { background: #b02a37; }
+    a { color: #333; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <h1>👜 Мои товары</h1>
+  <a href="/">← Назад</a>
+
+  <div class="grid">
+    {% for item in items %}
+    <div class="card">
+      <img src="{{ url_for('static', filename=item.image) }}" alt="{{ item.name }}">
+      <h3>{{ item.name }}</h3>
+      <p><b>Тип:</b> {{ item.type }}</p>
+      <p><b>Производство:</b> {{ item.production }}</p>
+      <p><b>Качество:</b> {{ item.quality }}</p>
+      <p><b>Количество:</b> {{ item.quantity }}</p>
+
+      <form action="/delete_item" method="post">
+        <input type="hidden" name="name" value="{{ item.name }}">
+        <button type="submit">🗑️ Удалить</button>
+      </form>
+    </div>
+    {% endfor %}
+  </div>
+</body>
+</html>
